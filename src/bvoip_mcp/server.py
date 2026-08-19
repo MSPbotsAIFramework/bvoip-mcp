@@ -76,6 +76,24 @@ def create_mcp_server(settings: Settings) -> FastMCP:
     # correctly behind a reverse proxy or docker network.
     mcp = FastMCP(
         name="bvoip-mcp",
+        instructions=(
+            "Bvoip (vendor platform: 1Stream) is a VoIP/PBX phone system MSPs use "
+            "for their own or clients' call handling — extensions, queues/ring "
+            "groups, and call routing. This server exposes 1Stream's call-reporting "
+            "and status API as read-only tools: call detail records "
+            "(bvoip_get_call_logs), live extension/queue phone status "
+            "(bvoip_get_phone_statuses), call-volume breakdowns by hour "
+            "(bvoip_get_calls_by_hour), by extension "
+            "(bvoip_get_calls_by_extension), and aggregate totals "
+            "(bvoip_get_calls_leaderboard), plus CRM extension-to-user mappings "
+            "(bvoip_get_client_crm_user_extension_mappings, e.g. linking a "
+            "ConnectWise member to their phone extension). Typical use: pull "
+            "call logs or volume stats for a reporting period, check who is "
+            "online/available right now, or resolve which CRM user owns an "
+            "extension seen in a call record. All 6 tools are read-only queries "
+            "with no required parameters; pass extra_params for additional "
+            "vendor-specific filters (e.g. a date range) when known."
+        ),
         transport_security=TransportSecuritySettings(enable_dns_rebinding_protection=False),
     )
 
