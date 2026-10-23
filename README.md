@@ -101,11 +101,11 @@ integration convention sends this key as the raw value of the
 `Authorization` header — **no `Bearer ` prefix** — and this server forwards
 it exactly that way.
 
-### HEADER 授权参数说明
+### HEADER Authentication Parameters
 
-| Header | 类型 | 是否必填 | 默认值 | 枚举值 | 字段描述 | Example |
+| Header | Type | Required | Default | Allowed values | Description | Example |
 |---|---|---|---|---|---|---|
-| `X-Bvoip-Api-Key` | string | 是 | 无 | 无 | 1Stream 静态 API Key，原样转发为上游 `Authorization` 请求头（不加 `Bearer ` 前缀） | `a1b2c3d4e5f6...` |
+| `X-Bvoip-Api-Key` | string | Yes | None | None | 1Stream static API Key, forwarded as-is as the upstream `Authorization` request header (without the `Bearer ` prefix) | `a1b2c3d4e5f6...` |
 
 Missing the header returns `401`:
 ```json
@@ -119,11 +119,11 @@ Missing the header returns `401`:
 
 ## Environment Variables
 
-| Variable | 类型 | 是否必填 | 默认值 | 说明 |
+| Variable | Type | Required | Default | Description |
 |---|---|---|---|---|
-| `MCP_HTTP_PORT` | int | 否 | `8080` | HTTP 监听端口 |
-| `MCP_HTTP_HOST` | string | 否 | `0.0.0.0` | HTTP 监听地址 |
-| `BVOIP_BASE_URL` | string | 否 | `https://portal.1stream.com/api/ClientAccess.svc` | 1Stream ClientAccess 基础 URL |
+| `MCP_HTTP_PORT` | int | No | `8080` | HTTP listen port |
+| `MCP_HTTP_HOST` | string | No | `0.0.0.0` | HTTP listen address |
+| `BVOIP_BASE_URL` | string | No | `https://portal.1stream.com/api/ClientAccess.svc` | 1Stream ClientAccess base URL |
 
 ## MCP Endpoint
 
@@ -139,16 +139,16 @@ dict for any additional query-string filters (e.g. a date range), since
 1Stream's full filter reference is only published in their partner-gated
 Postman collection (see **Known Gaps**).
 
-| Tool | 功能 | 参数 |
+| Tool | Description | Parameters |
 |---|---|---|
-| `bvoip_get_call_logs` | 列出通话详单（起止时间、方向、分机、队列/振铃组、通话时长、录音链接、关联 CRM 工单等） | `extra_params: dict[str,str] \| None` |
-| `bvoip_get_phone_statuses` | 列出当前分机/队列状态（注册状态、登录/可用状态、队列坐席分配/可用/通话数、自定义状态等） | `extra_params: dict[str,str] \| None` |
-| `bvoip_get_calls_by_hour` | 按小时统计通话量（呼入/呼出/总数/未接听） | `extra_params: dict[str,str] \| None` |
-| `bvoip_get_calls_leaderboard` | 统计周期内的通话总量（呼入/呼出/总数/未接听） | `extra_params: dict[str,str] \| None` |
-| `bvoip_get_calls_by_extension` | 按分机统计通话数据（呼入/呼出/总数、平均及总通话时长） | `extra_params: dict[str,str] \| None` |
-| `bvoip_get_client_crm_user_extension_mappings` | 列出 1Stream 用户/分机与关联 CRM（如 ConnectWise）成员账号的映射（分机、CRM 成员 ID/用户名、角色、套餐等） | `extra_params: dict[str,str] \| None` |
+| `bvoip_get_call_logs` | List call detail records (start/end time, direction, extension, queue/ring group, call duration, recording link, associated CRM ticket, etc.) | `extra_params: dict[str,str] \| None` |
+| `bvoip_get_phone_statuses` | List current extension/queue statuses (registration status, login/availability status, queue agent assigned/available/on-call counts, custom statuses, etc.) | `extra_params: dict[str,str] \| None` |
+| `bvoip_get_calls_by_hour` | Call volume by hour (inbound/outbound/total/unanswered) | `extra_params: dict[str,str] \| None` |
+| `bvoip_get_calls_leaderboard` | Total call volume within the period (inbound/outbound/total/unanswered) | `extra_params: dict[str,str] \| None` |
+| `bvoip_get_calls_by_extension` | Call statistics by extension (inbound/outbound/total, average and total call duration) | `extra_params: dict[str,str] \| None` |
+| `bvoip_get_client_crm_user_extension_mappings` | List mappings between 1Stream users/extensions and associated CRM (e.g. ConnectWise) member accounts (extension, CRM member ID/username, role, plan, etc.) | `extra_params: dict[str,str] \| None` |
 
-## 测试示例
+## Test Example
 
 ```bash
 # Health check
